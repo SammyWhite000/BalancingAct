@@ -6,28 +6,28 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.webmvc.test.autoconfigure.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.test.web.servlet.MockMvc;
 
-import game.balancingact.backend.apicontrollers.HealthController;
-
 /**
- * Test class for {@link HealthController}.
+ * Test class for HealthController functionality.
  * HealthControllerTest
  */
-@WebMvcTest(HealthController.class)
+@SpringBootTest
+@AutoConfigureMockMvc
 class HealthControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
     /**
-     * Test to verify that the health endpoint returns a status of "ok".
-     * @throws Exception
+     * Test method to verify that the health endpoint returns a status of "ok".
+     *
+     * @throws Exception if an error occurs during the request
      */
     @Test
     void healthEndpointReturnsOk() throws Exception {
-        // Perform a GET request to the /api/health endpoint and verify the response
         mockMvc.perform(get("/api/health"))
             .andExpect(status().isOk())
             .andExpect(jsonPath("$.status").value("ok"));
